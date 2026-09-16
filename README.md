@@ -1,121 +1,80 @@
 # PrivateLifeTracker
 
-A **100% Private & Secure** personal tracking application. All your data stays encrypted on your device. No cloud sharing. No third-party access. Complete control.
+PrivateLifeTracker is a deployment-ready Progressive Web App (PWA) for privacy-first personal tracking.
 
-## 🔒 Security Features
+## What it tracks
 
-- **End-to-End Encryption**: AES-256 encryption for all data
-- **Local Storage First**: Data stored locally on your device
-- **Zero External APIs**: No data leaves your device without your consent
-- **No Location Tracking**: Complete privacy
-- **Self-Hosted Option**: Run your own backend if needed
-- **Open Source**: Full transparency on how your data is handled
+- Mood
+- Habits
+- Health
+- Productivity
+- Finances
 
-## 📊 Features
+## Privacy model
 
-### Tracking Capabilities
-- **Health Metrics**: Steps, calories, sleep, heart rate, weight
-- **Productivity**: Tasks, time tracking, focus sessions, habits
-- **Finances**: Income, expenses, budgets, investments
-- **Mood & Mental Health**: Daily mood, stress levels, notes
-- **Fitness**: Workouts, exercises, progress tracking
-- **Custom Metrics**: Add your own tracking categories
+- Data is stored locally in browser storage (`localStorage`) on your device.
+- No analytics, no cloud sync, and no external data sharing is enabled by default.
+- If browser/site data is cleared, local app data can be removed.
 
-### Dashboard & Analytics
-- Real-time visualizations
-- Trends and insights
-- Monthly/yearly reports
-- Custom date ranges
-- Data export (CSV, JSON)
-
-### Privacy Controls
-- Encryption settings
-- Backup management
-- Data deletion options
-- Access logs
-- Device management
-
-## 🏗️ Architecture
-
-```
-PrivateLifeTracker/
-├── frontend/          # React + TypeScript (Vite)
-├── backend/           # Node.js/Express (Optional, self-hosted)
-├── encryption/        # Crypto utilities
-├── docs/              # Security & setup documentation
-└── tests/             # Unit & integration tests
-```
-
-## 🚀 Quick Start
-
-### Prerequisites
-- Node.js 16+
-- npm or yarn
-
-### Installation
+## Local development
 
 ```bash
-# Clone the repository
-git clone https://github.com/nirajmallik143-hub/PrivateLifeTracker.git
-cd PrivateLifeTracker
-
-# Install dependencies
 npm install
-
-# Start development server
 npm run dev
-
-# Build for production
-npm run build
 ```
 
-## 📱 Supported Platforms
+Open the local URL printed by Vite.
 
-- ✅ Web (Any modern browser)
-- ✅ Desktop (Electron - coming soon)
-- ✅ Mobile (React Native - coming soon)
-
-## 🔐 Data Privacy
-
-Your data:
-- Is encrypted using AES-256 encryption
-- Never leaves your device (unless you choose self-hosted backend)
-- Is never sold, shared, or analyzed by third parties
-- Can be deleted completely at any time
-- Remains under your complete control
-
-## 📚 Documentation
-
-- [Security Architecture](./docs/SECURITY.md)
-- [Setup Guide](./docs/SETUP.md)
-- [API Documentation](./docs/API.md)
-- [Encryption Details](./docs/ENCRYPTION.md)
-
-## 🛠️ Development
+## Production build
 
 ```bash
-# Run tests
-npm run test
-
-# Lint code
-npm run lint
-
-# Type check
 npm run type-check
+npm run test
+npm run build
+npm run preview
 ```
 
-## 📄 License
+`npm run preview` serves the production build locally.
 
-MIT - Free to use and modify
+## Deploy to Vercel
 
-## ⚠️ Disclaimer
+1. Push this repository to GitHub.
+2. In Vercel, import the repository.
+3. Framework preset: **Vite** (auto-detected).
+4. Build command: `npm run build`
+5. Output directory: `dist`
+6. Deploy.
 
-This is your personal application. While we follow security best practices, ensure you:
-- Keep your encryption keys safe
-- Regularly back up your data
-- Keep dependencies updated
-- Run security audits periodically
+## Deploy to Netlify
 
----
+1. Push this repository to GitHub.
+2. In Netlify, create a new site from Git.
+3. Build command: `npm run build`
+4. Publish directory: `dist`
+5. Deploy.
 
-**Built with privacy in mind. Your data, your control.** 🔒
+## Use on Redmi 12 (Chrome)
+
+1. Open your deployed app URL in Chrome on the Redmi 12.
+2. Verify the app loads and works.
+3. Tap Chrome menu (**⋮**) → **Add to Home screen** or **Install app**.
+4. Confirm installation.
+5. Launch from the home screen for app-like standalone usage.
+
+## Notes for offline/install behavior
+
+- The app includes a web app manifest and service worker caching via `vite-plugin-pwa`.
+- After first load, built assets are cached for offline usage.
+- Install prompt/availability can vary by Chrome version and engagement heuristics.
+
+## Available scripts
+
+- `npm run dev` — start development server
+- `npm run build` — type-check and build production assets
+- `npm run preview` — preview production build
+- `npm run type-check` — TypeScript checks
+- `npm run test` — storage behavior tests (Vitest)
+
+## License
+
+MIT
