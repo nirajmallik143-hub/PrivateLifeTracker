@@ -1,121 +1,127 @@
 # PrivateLifeTracker
 
-A **100% Private & Secure** personal tracking application. All your data stays encrypted on your device. No cloud sharing. No third-party access. Complete control.
+PrivateLifeTracker is a privacy-first, local-only personal tracker that now ships as an installable Progressive Web App (PWA). You can run it yourself, keep it offline after the first load, and install it on a modern Android phone or on iPhone/iPad without creating an account or sending data to a cloud service.
 
-## 🔒 Security Features
+## Privacy-first design
 
-- **End-to-End Encryption**: AES-256 encryption for all data
-- **Local Storage First**: Data stored locally on your device
-- **Zero External APIs**: No data leaves your device without your consent
-- **No Location Tracking**: Complete privacy
-- **Self-Hosted Option**: Run your own backend if needed
-- **Open Source**: Full transparency on how your data is handled
+- No accounts, analytics, ads, or third-party scripts.
+- No backend is required.
+- Entries are stored in browser storage on the device.
+- The service worker caches only the app shell for offline use.
+- Import/export stays in JSON files that you control.
 
-## 📊 Features
+## What is included
 
-### Tracking Capabilities
-- **Health Metrics**: Steps, calories, sleep, heart rate, weight
-- **Productivity**: Tasks, time tracking, focus sessions, habits
-- **Finances**: Income, expenses, budgets, investments
-- **Mood & Mental Health**: Daily mood, stress levels, notes
-- **Fitness**: Workouts, exercises, progress tracking
-- **Custom Metrics**: Add your own tracking categories
+- Installable PWA manifest and mobile-friendly metadata
+- Offline service worker for the local app shell
+- Android launcher icons and iOS home-screen icon
+- Local entry tracking with export/import and delete controls
+- Zero-dependency build, preview, and test scripts
 
-### Dashboard & Analytics
-- Real-time visualizations
-- Trends and insights
-- Monthly/yearly reports
-- Custom date ranges
-- Data export (CSV, JSON)
-
-### Privacy Controls
-- Encryption settings
-- Backup management
-- Data deletion options
-- Access logs
-- Device management
-
-## 🏗️ Architecture
+## Project structure
 
 ```
 PrivateLifeTracker/
-├── frontend/          # React + TypeScript (Vite)
-├── backend/           # Node.js/Express (Optional, self-hosted)
-├── encryption/        # Crypto utilities
-├── docs/              # Security & setup documentation
-└── tests/             # Unit & integration tests
+├── app.js
+├── assets/
+├── index.html
+├── manifest.webmanifest
+├── scripts/
+├── styles.css
+├── sw.js
+└── tests/
 ```
 
-## 🚀 Quick Start
+## Local development
 
 ### Prerequisites
-- Node.js 16+
-- npm or yarn
 
-### Installation
+- Node.js 18+
+
+### Start the local development server
 
 ```bash
-# Clone the repository
-git clone https://github.com/nirajmallik143-hub/PrivateLifeTracker.git
-cd PrivateLifeTracker
-
-# Install dependencies
-npm install
-
-# Start development server
 npm run dev
+```
 
-# Build for production
+Then open `http://127.0.0.1:4173` in a browser.
+
+Notes:
+- Service workers work on `localhost`/`127.0.0.1` during development.
+- Data is stored in that browser profile only.
+
+## Automated checks
+
+Run the installability and configuration checks:
+
+```bash
+npm test
+```
+
+## Production build
+
+Create the static production bundle:
+
+```bash
 npm run build
 ```
 
-## 📱 Supported Platforms
+This writes the deployable site into `dist/`.
 
-- ✅ Web (Any modern browser)
-- ✅ Desktop (Electron - coming soon)
-- ✅ Mobile (React Native - coming soon)
-
-## 🔐 Data Privacy
-
-Your data:
-- Is encrypted using AES-256 encryption
-- Never leaves your device (unless you choose self-hosted backend)
-- Is never sold, shared, or analyzed by third parties
-- Can be deleted completely at any time
-- Remains under your complete control
-
-## 📚 Documentation
-
-- [Security Architecture](./docs/SECURITY.md)
-- [Setup Guide](./docs/SETUP.md)
-- [API Documentation](./docs/API.md)
-- [Encryption Details](./docs/ENCRYPTION.md)
-
-## 🛠️ Development
+### Preview the production build locally
 
 ```bash
-# Run tests
-npm run test
-
-# Lint code
-npm run lint
-
-# Type check
-npm run type-check
+npm run preview
 ```
 
-## 📄 License
+Then open `http://127.0.0.1:4173`.
 
-MIT - Free to use and modify
+## Production deployment
 
-## ⚠️ Disclaimer
+Deploy the contents of `dist/` to any HTTPS static host that you control, for example:
 
-This is your personal application. While we follow security best practices, ensure you:
-- Keep your encryption keys safe
-- Regularly back up your data
-- Keep dependencies updated
-- Run security audits periodically
+- your own Nginx/Caddy server
+- a private NAS/home server with HTTPS enabled
+- any static hosting setup you trust and control
 
----
+Deployment requirements:
 
-**Built with privacy in mind. Your data, your control.** 🔒
+- Serve over **HTTPS** for real phone installability and offline support.
+- Keep all files on the same origin.
+- Do not add third-party analytics or remote scripts if you want to preserve the privacy guarantees.
+
+## Install on your phone
+
+### Android (Chrome, Edge, Samsung Internet)
+
+1. Open the deployed HTTPS site on your phone.
+2. Wait for the first page load to complete.
+3. Tap the in-app **Install app** button if shown, or use the browser menu and choose **Install app** / **Add to Home screen**.
+4. Launch PrivateLifeTracker from your home screen.
+
+### iPhone / iPad (Safari)
+
+1. Open the deployed HTTPS site in Safari.
+2. Tap the **Share** button.
+3. Choose **Add to Home Screen**.
+4. Confirm the name and tap **Add**.
+5. Launch PrivateLifeTracker from your home screen.
+
+## Data handling details
+
+- Clearing browser data or uninstalling the PWA may remove locally stored entries.
+- Export a JSON backup before changing devices or resetting your browser.
+- Imported backups replace the current in-browser data for this app.
+
+## Available scripts
+
+```bash
+npm run dev      # serve the source app locally
+npm run test     # verify PWA metadata and offline shell configuration
+npm run build    # create dist/
+npm run preview  # serve dist/ locally
+```
+
+## License
+
+MIT

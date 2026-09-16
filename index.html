@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0f172a" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="PrivateLifeTracker" />
+    <meta name="description" content="Track personal information privately on your own device, with no analytics or cloud sync." />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./assets/icons/icon-180.png" />
+    <link rel="stylesheet" href="./styles.css" />
+    <title>PrivateLifeTracker</title>
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="hero card">
+        <div>
+          <p class="eyebrow">PrivateLifeTracker</p>
+          <h1>Your private life dashboard, stored only on this device.</h1>
+          <p class="lede">
+            Add personal notes, habits, and measurements without creating an account, sending data to a server,
+            or enabling analytics.
+          </p>
+        </div>
+        <div class="hero-actions">
+          <button id="install-button" class="primary" type="button" hidden>Install app</button>
+          <p id="install-help" class="install-help">
+            Install from your browser menu on Android, or use <strong>Share → Add to Home Screen</strong> on iPhone/iPad.
+          </p>
+        </div>
+      </header>
+
+      <section class="privacy card" aria-label="Privacy promises">
+        <h2>Privacy promises</h2>
+        <ul>
+          <li>No accounts, analytics, ads, or third-party scripts.</li>
+          <li>Data is stored in your browser on this device only.</li>
+          <li>Works offline after the first successful load.</li>
+          <li>Export and import your own JSON backups any time.</li>
+        </ul>
+      </section>
+
+      <section class="grid">
+        <section class="card" aria-labelledby="entry-title">
+          <h2 id="entry-title">Add an entry</h2>
+          <form id="entry-form" class="stack">
+            <label>
+              <span>Date</span>
+              <input id="entry-date" name="date" type="date" required />
+            </label>
+            <label>
+              <span>Category</span>
+              <input id="entry-category" name="category" type="text" maxlength="40" placeholder="Mood, finance, sleep..." required />
+            </label>
+            <label>
+              <span>Value</span>
+              <input id="entry-value" name="value" type="text" maxlength="60" placeholder="7h 30m, Calm, $25..." required />
+            </label>
+            <label>
+              <span>Note</span>
+              <textarea id="entry-note" name="note" rows="3" maxlength="240" placeholder="Optional private note"></textarea>
+            </label>
+            <button class="primary" type="submit">Save locally</button>
+          </form>
+        </section>
+
+        <section class="card" aria-labelledby="summary-title">
+          <h2 id="summary-title">At a glance</h2>
+          <div class="summary-grid">
+            <article>
+              <span class="summary-label">Entries</span>
+              <strong id="summary-count">0</strong>
+            </article>
+            <article>
+              <span class="summary-label">Latest category</span>
+              <strong id="summary-category">—</strong>
+            </article>
+            <article>
+              <span class="summary-label">Latest update</span>
+              <strong id="summary-date">—</strong>
+            </article>
+          </div>
+          <div class="stack actions">
+            <button id="export-button" type="button">Export JSON backup</button>
+            <label class="file-input">
+              <span>Import JSON backup</span>
+              <input id="import-input" type="file" accept="application/json" />
+            </label>
+            <button id="clear-button" type="button" class="danger">Delete all local data</button>
+          </div>
+        </section>
+      </section>
+
+      <section class="card" aria-labelledby="entries-title">
+        <div class="section-heading">
+          <h2 id="entries-title">Recent entries</h2>
+          <p id="storage-status" class="status">Stored locally in your browser.</p>
+        </div>
+        <ul id="entries-list" class="entries-list"></ul>
+        <p id="empty-state" class="empty-state">No entries yet. Add your first private record above.</p>
+      </section>
+    </main>
+
+    <template id="entry-template">
+      <li class="entry-item">
+        <div>
+          <p class="entry-meta"></p>
+          <strong class="entry-value"></strong>
+          <p class="entry-note"></p>
+        </div>
+        <button class="ghost" type="button">Delete</button>
+      </li>
+    </template>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
