@@ -1,121 +1,125 @@
 # PrivateLifeTracker
 
-A **100% Private & Secure** personal tracking application. All your data stays encrypted on your device. No cloud sharing. No third-party access. Complete control.
+PrivateLifeTracker is now a **minimal, runnable web app** built with **React + TypeScript + Vite** and packaged as an installable **Progressive Web App (PWA)**.
 
-## 🔒 Security Features
+## Current scope
 
-- **End-to-End Encryption**: AES-256 encryption for all data
-- **Local Storage First**: Data stored locally on your device
-- **Zero External APIs**: No data leaves your device without your consent
-- **No Location Tracking**: Complete privacy
-- **Self-Hosted Option**: Run your own backend if needed
-- **Open Source**: Full transparency on how your data is handled
+This repository was previously only a skeleton README. The current implementation is intentionally small and honest:
 
-## 📊 Features
+- ✅ Local-only browser storage on the device (`localStorage`)
+- ✅ No analytics, cloud sync, or third-party tracking
+- ✅ Installable from Chrome on Android as a PWA when served over HTTPS
+- ✅ Simple private entry tracking with JSON export
+- ❌ No native Android APK
+- ❌ No backend or sync service
+- ❌ No end-to-end encryption yet
 
-### Tracking Capabilities
-- **Health Metrics**: Steps, calories, sleep, heart rate, weight
-- **Productivity**: Tasks, time tracking, focus sessions, habits
-- **Finances**: Income, expenses, budgets, investments
-- **Mood & Mental Health**: Daily mood, stress levels, notes
-- **Fitness**: Workouts, exercises, progress tracking
-- **Custom Metrics**: Add your own tracking categories
+## Tech stack
 
-### Dashboard & Analytics
-- Real-time visualizations
-- Trends and insights
-- Monthly/yearly reports
-- Custom date ranges
-- Data export (CSV, JSON)
+- React 19
+- TypeScript
+- Vite
+- Static PWA assets: `manifest.webmanifest`, `service-worker.js`, install icons
 
-### Privacy Controls
-- Encryption settings
-- Backup management
-- Data deletion options
-- Access logs
-- Device management
+## Project structure
 
-## 🏗️ Architecture
-
-```
-PrivateLifeTracker/
-├── frontend/          # React + TypeScript (Vite)
-├── backend/           # Node.js/Express (Optional, self-hosted)
-├── encryption/        # Crypto utilities
-├── docs/              # Security & setup documentation
-└── tests/             # Unit & integration tests
+```text
+/home/runner/work/PrivateLifeTracker/PrivateLifeTracker
+├── public/
+│   ├── manifest.webmanifest
+│   ├── service-worker.js
+│   └── icons...
+├── src/
+│   ├── App.tsx
+│   ├── index.css
+│   └── main.tsx
+├── index.html
+├── package.json
+├── tsconfig*.json
+└── vite.config.ts
 ```
 
-## 🚀 Quick Start
+## Install and run locally
 
 ### Prerequisites
-- Node.js 16+
-- npm or yarn
 
-### Installation
+- Node.js 20+ recommended
+- npm
+
+### Development
 
 ```bash
-# Clone the repository
-git clone https://github.com/nirajmallik143-hub/PrivateLifeTracker.git
-cd PrivateLifeTracker
-
-# Install dependencies
+cd /home/runner/work/PrivateLifeTracker/PrivateLifeTracker
 npm install
-
-# Start development server
 npm run dev
+```
 
-# Build for production
+### Production build
+
+```bash
+cd /home/runner/work/PrivateLifeTracker/PrivateLifeTracker
+npm install
 npm run build
 ```
 
-## 📱 Supported Platforms
+The production files are written to `/home/runner/work/PrivateLifeTracker/PrivateLifeTracker/dist`.
 
-- ✅ Web (Any modern browser)
-- ✅ Desktop (Electron - coming soon)
-- ✅ Mobile (React Native - coming soon)
+## Redmi 12 installation options
 
-## 🔐 Data Privacy
+### Option A: Proper installable PWA from Chrome on Android
 
-Your data:
-- Is encrypted using AES-256 encryption
-- Never leaves your device (unless you choose self-hosted backend)
-- Is never sold, shared, or analyzed by third parties
-- Can be deleted completely at any time
-- Remains under your complete control
+This is the best option if you do **not** want to depend on a desktop development server while using the app.
 
-## 📚 Documentation
+1. Build the app:
 
-- [Security Architecture](./docs/SECURITY.md)
-- [Setup Guide](./docs/SETUP.md)
-- [API Documentation](./docs/API.md)
-- [Encryption Details](./docs/ENCRYPTION.md)
+   ```bash
+   cd /home/runner/work/PrivateLifeTracker/PrivateLifeTracker
+   npm install
+   npm run build
+   ```
 
-## 🛠️ Development
+2. Publish the `dist/` folder to any **static HTTPS host** you control.
+   - Examples: your own Nginx/Caddy server, a private static hosting setup, or any HTTPS-only static site host.
+   - The app itself is static; user data still stays in the browser on the Redmi 12.
+
+3. On the Redmi 12, open the HTTPS URL in **Chrome**.
+4. In Chrome, open the menu and tap **Install app** or **Add to Home screen**.
+5. Launch it from the home screen like an app.
+
+### Option B: Same-Wi-Fi local network preview
+
+This is useful for quick testing from your phone, but it still depends on the computer staying on.
 
 ```bash
-# Run tests
-npm run test
+cd /home/runner/work/PrivateLifeTracker/PrivateLifeTracker
+npm install
+npm run build
+npm run preview -- --host 0.0.0.0
+```
 
-# Lint code
+Then open the shown `http://<your-computer-ip>:4173` address from Chrome on the Redmi 12 while both devices are on the same Wi-Fi network.
+
+> Note: plain HTTP on a LAN is fine for testing the UI, but Android PWA install/offline behavior is most reliable when the app is served over **HTTPS**.
+
+## Privacy notes
+
+- Data is stored in the browser storage of the current device/browser profile.
+- No external APIs are used.
+- If you clear browser site data or uninstall/reset the browser profile, local entries are removed from that device.
+- Export JSON regularly if you want backups.
+
+## Available commands
+
+```bash
+npm run dev
+npm run build
+npm run preview
 npm run lint
-
-# Type check
 npm run type-check
 ```
 
-## 📄 License
+## Validation used for this implementation
 
-MIT - Free to use and modify
-
-## ⚠️ Disclaimer
-
-This is your personal application. While we follow security best practices, ensure you:
-- Keep your encryption keys safe
-- Regularly back up your data
-- Keep dependencies updated
-- Run security audits periodically
-
----
-
-**Built with privacy in mind. Your data, your control.** 🔒
+- `npm run type-check`
+- `npm run lint`
+- `npm run build`
