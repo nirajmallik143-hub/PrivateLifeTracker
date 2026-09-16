@@ -7,7 +7,7 @@ import {
   buildForecastViewModel,
   describeWeatherCode,
   formatLocationName
-} from "../script.js";
+} from "../script.mjs";
 
 test("describeWeatherCode falls back for unknown codes", () => {
   assert.deepEqual(describeWeatherCode(999), {

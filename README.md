@@ -28,6 +28,12 @@ A **100% Private & Secure** personal tracking application. All your data stays e
 - Custom date ranges
 - Data export (CSV, JSON)
 
+### Weather Dashboard
+- Search for a city and load current weather with a 5-day outlook
+- Use browser geolocation to check local conditions without creating an account
+- Powered by the privacy-friendly Open-Meteo API with no API key required
+- Displays temperature, feels-like temperature, humidity, wind speed, and weather conditions
+
 ### Privacy Controls
 - Encryption settings
 - Backup management
@@ -59,15 +65,17 @@ PrivateLifeTracker/
 git clone https://github.com/nirajmallik143-hub/PrivateLifeTracker.git
 cd PrivateLifeTracker
 
-# Install dependencies
-npm install
+# Serve the static dashboard locally
+python -m http.server 8000
 
-# Start development server
-npm run dev
-
-# Build for production
-npm run build
+# Then open http://localhost:8000 in your browser
 ```
+
+### Weather Dashboard Notes
+
+- No environment variables are required.
+- Weather data is fetched directly in the browser from Open-Meteo only when you search for a city or choose to use geolocation.
+- Search terms are not persisted by the app and no analytics or third-party tracking is included.
 
 ## 📱 Supported Platforms
 
@@ -94,14 +102,8 @@ Your data:
 ## 🛠️ Development
 
 ```bash
-# Run tests
-npm run test
-
-# Lint code
-npm run lint
-
-# Type check
-npm run type-check
+# Run the weather dashboard tests
+node --test tests/weather.test.mjs
 ```
 
 ## 📄 License
