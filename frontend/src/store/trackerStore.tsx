@@ -29,6 +29,11 @@ interface TrackerStoreContextValue {
 
 const TrackerStoreContext = createContext<TrackerStoreContextValue | null>(null)
 
+interface TrackerSnapshot {
+  data: TrackerData
+  version: number
+}
+
 function createMetric(): CustomMetric {
   return {
     id: globalThis.crypto.randomUUID(),
@@ -47,13 +52,15 @@ export function TrackerProvider({
   debounceMs = 400,
   storage = encryptedStore,
 }: TrackerProviderProps) {
-  const [data, setData] = useState<TrackerData>(DEFAULT_TRACKER_DATA)
+  const [trackerSnapshot, setTrackerSnapshot] = useState<TrackerSnapshot>({
+    data: DEFAULT_TRACKER_DATA,
+    version: 0,
+  })
   const [saveState, setSaveState] = useState<
     TrackerStoreContextValue['saveState']
   >('idle')
   const [saveMessage, setSaveMessage] = useState('Encrypted autosave ready')
   const [isReady, setIsReady] = useState(false)
-  const [version, setVersion] = useState(0)
   const saveRunRef = useRef(0)
 
   useEffect(() => {
@@ -64,7 +71,7 @@ export function TrackerProvider({
         const storedData = await storage.loadData<TrackerData>(TRACKER_STORAGE_KEY)
 
         if (!isCancelled && storedData) {
-          setData(storedData)
+          setTrackerSnapshot((current) => ({ ...current, data: storedData }))
           setSaveState('saved')
           setSaveMessage('Encrypted data restored')
         }
@@ -88,7 +95,7 @@ export function TrackerProvider({
   }, [storage])
 
   useEffect(() => {
-    if (!isReady || version === 0) {
+    if (!isReady || trackerSnapshot.version === 0) {
       return undefined
     }
 
@@ -101,7 +108,7 @@ export function TrackerProvider({
     const timeout = window.setTimeout(() => {
       void (async () => {
         try {
-          await storage.saveData(TRACKER_STORAGE_KEY, data)
+          await storage.saveData(TRACKER_STORAGE_KEY, trackerSnapshot.data)
 
           if (saveRunRef.current === saveRun) {
             setSaveState('saved')
@@ -121,11 +128,13 @@ export function TrackerProvider({
     return () => {
       window.clearTimeout(timeout)
     }
-  }, [data, debounceMs, isReady, storage, version])
+  }, [debounceMs, isReady, storage, trackerSnapshot])
 
   function updateData(updater: (current: TrackerData) => TrackerData) {
-    setData((current) => updater(current))
-    setVersion((current) => current + 1)
+    setTrackerSnapshot((current) => ({
+      data: updater(current.data),
+      version: current.version + 1,
+    }))
   }
 
   function addCustomMetric() {
@@ -157,7 +166,7 @@ export function TrackerProvider({
 
   const value = useMemo<TrackerStoreContextValue>(
     () => ({
-      data,
+      data: trackerSnapshot.data,
       saveState,
       saveMessage,
       updateData,
@@ -165,7 +174,7 @@ export function TrackerProvider({
       updateCustomMetric,
       removeCustomMetric,
     }),
-    [data, saveMessage, saveState],
+    [saveMessage, saveState, trackerSnapshot.data],
   )
 
   return <TrackerStoreContext.Provider value={value}>{children}</TrackerStoreContext.Provider>

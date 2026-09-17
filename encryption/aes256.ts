@@ -45,7 +45,11 @@ function decodeBase64(value: string): Uint8Array {
 }
 
 function getDefaultKeyStorage(): KeyStorage {
-  return window.localStorage
+  if (!('localStorage' in globalThis)) {
+    throw new Error('Local storage is unavailable in this environment.')
+  }
+
+  return globalThis.localStorage
 }
 
 async function getOrCreateKey(
