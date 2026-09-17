@@ -101,4 +101,71 @@ describe('autosave integration', () => {
       ),
     )
   })
+
+  test('queued saves persist the latest snapshot when writes overlap', async () => {
+    vi.useFakeTimers()
+
+    let resolveFirstSave: (() => void) | undefined
+    const firstSave = new Promise<void>((resolve) => {
+      resolveFirstSave = resolve
+    })
+
+    const saveData = vi
+      .fn()
+      .mockImplementationOnce(() => firstSave)
+      .mockResolvedValue(undefined)
+    const loadData = vi.fn().mockResolvedValue(null)
+    const storage: TrackerPersistence = {
+      saveData,
+      loadData,
+    }
+
+    render(
+      <TrackerProvider debounceMs={400} storage={storage}>
+        <App />
+      </TrackerProvider>,
+    )
+
+    await act(async () => {
+      await Promise.resolve()
+    })
+
+    const moodInput = screen.getByLabelText('Daily mood')
+
+    act(() => {
+      fireEvent.change(moodInput, { target: { value: 'First value' } })
+    })
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(400)
+      await Promise.resolve()
+    })
+
+    act(() => {
+      fireEvent.change(moodInput, { target: { value: 'Latest value' } })
+    })
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(400)
+      await Promise.resolve()
+    })
+
+    expect(saveData).toHaveBeenCalledTimes(1)
+
+    await act(async () => {
+      resolveFirstSave?.()
+      await Promise.resolve()
+      await Promise.resolve()
+      await vi.runAllTimersAsync()
+    })
+
+    expect(saveData).toHaveBeenCalledTimes(2)
+
+    expect(saveData).toHaveBeenLastCalledWith(
+      'tracker-data',
+      expect.objectContaining({
+        mood: expect.objectContaining({ today: 'Latest value' }),
+      }),
+    )
+  })
 })

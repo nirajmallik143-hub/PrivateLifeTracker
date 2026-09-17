@@ -77,6 +77,7 @@ export function TrackerProvider({
   const [saveMessage, setSaveMessage] = useState('Encrypted autosave ready')
   const [isReady, setIsReady] = useState(false)
   const saveRunRef = useRef(0)
+  const saveQueueRef = useRef(Promise.resolve())
 
   useEffect(() => {
     let isCancelled = false
@@ -124,7 +125,11 @@ export function TrackerProvider({
     saveRunRef.current = saveRun
 
     const timeout = window.setTimeout(() => {
-      void (async () => {
+      saveQueueRef.current = saveQueueRef.current.then(async () => {
+        if (saveRunRef.current !== saveRun) {
+          return
+        }
+
         try {
           await storage.saveData(TRACKER_STORAGE_KEY, trackerSnapshot.data)
 
@@ -140,7 +145,7 @@ export function TrackerProvider({
             )
           }
         }
-      })()
+      })
     }, debounceMs)
 
     return () => {
