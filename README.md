@@ -49,7 +49,7 @@ PrivateLifeTracker/
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js 16+
+- Node.js 22.12+ (or 24.x / 26.x+)
 - npm or yarn
 
 ### Installation
