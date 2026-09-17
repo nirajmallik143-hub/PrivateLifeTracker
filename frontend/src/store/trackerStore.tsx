@@ -86,7 +86,7 @@ export function TrackerProvider({
       try {
         const storedData = await storage.loadData<TrackerData>(TRACKER_STORAGE_KEY)
 
-        if (!isCancelled && storedData) {
+        if (!isCancelled && storedData !== null) {
           setTrackerSnapshot((current) => ({
             data: normalizeTrackerData(storedData),
             version: current.version,
