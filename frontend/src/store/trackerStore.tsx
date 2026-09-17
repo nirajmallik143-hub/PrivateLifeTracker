@@ -145,6 +145,7 @@ export function TrackerProvider({
 
     return () => {
       window.clearTimeout(timeout)
+      saveRunRef.current += 1
     }
   }, [debounceMs, isReady, storage, trackerSnapshot])
 

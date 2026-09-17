@@ -101,4 +101,54 @@ describe('autosave integration', () => {
       ),
     )
   })
+
+  test('unmount invalidates an in-flight autosave completion', async () => {
+    vi.useFakeTimers()
+
+    let resolveSave: (() => void) | undefined
+    const saveData = vi.fn(
+      () =>
+        new Promise<void>((resolve) => {
+          resolveSave = resolve
+        }),
+    )
+    const storage: TrackerPersistence = {
+      saveData,
+      loadData: vi.fn().mockResolvedValue(null),
+    }
+    const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+
+    const { unmount } = render(
+      <TrackerProvider debounceMs={400} storage={storage}>
+        <App />
+      </TrackerProvider>,
+    )
+
+    await act(async () => {
+      await Promise.resolve()
+    })
+
+    act(() => {
+      fireEvent.change(screen.getByLabelText('Daily mood'), {
+        target: { value: 'Settled' },
+      })
+    })
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(400)
+      await Promise.resolve()
+    })
+
+    expect(saveData).toHaveBeenCalledTimes(1)
+
+    unmount()
+
+    await act(async () => {
+      resolveSave?.()
+      await Promise.resolve()
+    })
+
+    expect(consoleErrorSpy).not.toHaveBeenCalled()
+    consoleErrorSpy.mockRestore()
+  })
 })

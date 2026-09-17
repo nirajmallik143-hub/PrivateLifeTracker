@@ -37,7 +37,6 @@ async function runTransaction<T>(
 
   return new Promise((resolve, reject) => {
     const transaction = database.transaction(STORE_NAME, mode)
-    const request = operation(transaction.objectStore(STORE_NAME))
     let isClosed = false
     let didSettle = false
     let result: T | undefined
@@ -55,6 +54,17 @@ async function runTransaction<T>(
         closeDatabase()
         reject(error)
       }
+    }
+
+    let request: IDBRequest<T>
+
+    try {
+      request = operation(transaction.objectStore(STORE_NAME))
+    } catch (error) {
+      rejectOnce(
+        error instanceof Error ? error : new Error('Local storage request failed.'),
+      )
+      return
     }
 
     request.addEventListener('error', () => {
