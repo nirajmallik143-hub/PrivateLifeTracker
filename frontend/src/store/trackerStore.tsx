@@ -34,8 +34,19 @@ interface TrackerSnapshot {
   version: number
 }
 
-function hasSnapshotChanged(data: TrackerData): boolean {
-  return JSON.stringify(data) !== JSON.stringify(DEFAULT_TRACKER_DATA)
+function normalizeTrackerData(data: TrackerData): TrackerData {
+  return {
+    health: { ...DEFAULT_TRACKER_DATA.health, ...data.health },
+    productivity: {
+      ...DEFAULT_TRACKER_DATA.productivity,
+      ...data.productivity,
+    },
+    finances: { ...DEFAULT_TRACKER_DATA.finances, ...data.finances },
+    mood: { ...DEFAULT_TRACKER_DATA.mood, ...data.mood },
+    fitness: { ...DEFAULT_TRACKER_DATA.fitness, ...data.fitness },
+    customMetrics: data.customMetrics ?? [],
+    settings: { ...DEFAULT_TRACKER_DATA.settings, ...data.settings },
+  }
 }
 
 function createMetric(): CustomMetric {
@@ -76,8 +87,8 @@ export function TrackerProvider({
 
         if (!isCancelled && storedData) {
           setTrackerSnapshot((current) => ({
-            data: storedData,
-            version: hasSnapshotChanged(storedData) ? current.version + 1 : current.version,
+            data: normalizeTrackerData(storedData),
+            version: current.version,
           }))
           setSaveState('saved')
           setSaveMessage('Encrypted data restored')

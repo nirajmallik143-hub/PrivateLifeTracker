@@ -39,6 +39,8 @@ async function runTransaction<T>(
     const transaction = database.transaction(STORE_NAME, mode)
     const request = operation(transaction.objectStore(STORE_NAME))
     let isClosed = false
+    let didSettle = false
+    let result: T | undefined
 
     function closeDatabase() {
       if (!isClosed) {
@@ -47,27 +49,36 @@ async function runTransaction<T>(
       }
     }
 
+    function rejectOnce(error: Error) {
+      if (!didSettle) {
+        didSettle = true
+        closeDatabase()
+        reject(error)
+      }
+    }
+
     request.addEventListener('error', () => {
-      closeDatabase()
-      reject(request.error ?? new Error('Local storage request failed.'))
+      rejectOnce(request.error ?? new Error('Local storage request failed.'))
     })
 
     request.addEventListener('success', () => {
-      resolve(request.result)
+      result = request.result
     })
 
     transaction.addEventListener('complete', () => {
-      closeDatabase()
+      if (!didSettle) {
+        didSettle = true
+        closeDatabase()
+        resolve(result as T)
+      }
     })
 
     transaction.addEventListener('error', () => {
-      closeDatabase()
-      reject(transaction.error ?? new Error('Local storage transaction failed.'))
+      rejectOnce(transaction.error ?? new Error('Local storage transaction failed.'))
     })
 
     transaction.addEventListener('abort', () => {
-      closeDatabase()
-      reject(transaction.error ?? new Error('Local storage transaction was aborted.'))
+      rejectOnce(transaction.error ?? new Error('Local storage transaction was aborted.'))
     })
   })
 }
