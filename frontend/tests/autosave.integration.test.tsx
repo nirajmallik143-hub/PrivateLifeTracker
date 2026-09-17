@@ -82,4 +82,23 @@ describe('autosave integration', () => {
       expect(profileNameInput).toBeTruthy()
     })
   })
+
+  test('load failures show a non-blocking error state', async () => {
+    const storage: TrackerPersistence = {
+      saveData: vi.fn().mockResolvedValue(undefined),
+      loadData: vi.fn().mockRejectedValue(new Error('restore failed')),
+    }
+
+    render(
+      <TrackerProvider storage={storage}>
+        <App />
+      </TrackerProvider>,
+    )
+
+    await waitFor(() =>
+      expect(screen.getByTestId('save-indicator').textContent).toContain(
+        'Could not read local encrypted data.',
+      ),
+    )
+  })
 })

@@ -34,6 +34,10 @@ interface TrackerSnapshot {
   version: number
 }
 
+function hasSnapshotChanged(data: TrackerData): boolean {
+  return JSON.stringify(data) !== JSON.stringify(DEFAULT_TRACKER_DATA)
+}
+
 function createMetric(): CustomMetric {
   return {
     id: globalThis.crypto.randomUUID(),
@@ -71,7 +75,10 @@ export function TrackerProvider({
         const storedData = await storage.loadData<TrackerData>(TRACKER_STORAGE_KEY)
 
         if (!isCancelled && storedData) {
-          setTrackerSnapshot((current) => ({ ...current, data: storedData }))
+          setTrackerSnapshot((current) => ({
+            data: storedData,
+            version: hasSnapshotChanged(storedData) ? current.version + 1 : current.version,
+          }))
           setSaveState('saved')
           setSaveMessage('Encrypted data restored')
         }
