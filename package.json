@@ -1,0 +1,16 @@
+{
+  "name": "privatelifetracker",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "A 100% private and secure personal tracking application with encrypted local autosave.",
+  "scripts": {
+    "postinstall": "npm install --prefix frontend",
+    "dev": "npm --prefix frontend run dev",
+    "build": "npm --prefix frontend run build",
+    "test": "npm --prefix frontend run test",
+    "lint": "npm --prefix frontend run lint",
+    "type-check": "npm --prefix frontend run type-check"
+  },
+  "license": "MIT"
+}
