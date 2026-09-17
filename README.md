@@ -75,6 +75,13 @@ npm run build
 - ✅ Desktop (Electron - coming soon)
 - ✅ Mobile (React Native - coming soon)
 
+## 🌐 Live Deployment
+
+- GitHub Pages URL: **https://nirajmallik143-hub.github.io/PrivateLifeTracker/**
+- Deployments run from `.github/workflows/deploy-pages.yml` on pushes to `main` or manual `workflow_dispatch`
+- The workflow uses root scripts (`npm ci` + `npm run build`) and publishes `frontend/dist`
+- Vite build base path is set to `/PrivateLifeTracker/` for production Pages builds, while local development remains `/`
+
 ## 🔐 Data Privacy
 
 Your data:
