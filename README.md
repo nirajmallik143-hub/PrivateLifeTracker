@@ -5,7 +5,7 @@ A **100% Private & Secure** personal tracking application. All your data stays e
 ## 🔒 Security Features
 
 - **End-to-End Encryption**: AES-256 encryption for all data
-- **Local Storage First**: Data stored locally on your device
+- **Local Storage First**: Data is encrypted and autosaved locally on your device
 - **Zero External APIs**: No data leaves your device without your consent
 - **No Location Tracking**: Complete privacy
 - **Self-Hosted Option**: Run your own backend if needed
@@ -83,6 +83,14 @@ Your data:
 - Is never sold, shared, or analyzed by third parties
 - Can be deleted completely at any time
 - Remains under your complete control
+- Is autosaved locally after every change with a short debounce
+
+## 💾 Autosave
+
+- Every tracked change is autosaved locally; no manual save button is required
+- Autosave waits 400ms after the latest change to avoid excessive writes while typing
+- Data is encrypted before it is written to IndexedDB
+- The app shows a subtle `Saving...` / `Saved locally` status indicator
 
 ## 📚 Documentation
 
@@ -112,7 +120,7 @@ MIT - Free to use and modify
 
 This is your personal application. While we follow security best practices, ensure you:
 - Keep your encryption keys safe
-- Regularly back up your data
+- Back up your device or export your data for disaster recovery beyond local autosave
 - Keep dependencies updated
 - Run security audits periodically
 

@@ -1,0 +1,154 @@
+.app-shell {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.eyebrow {
+  margin: 0 0 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.8rem;
+  color: var(--accent);
+}
+
+.lead {
+  max-width: 42rem;
+}
+
+.save-indicator {
+  display: inline-flex;
+  gap: 0.55rem;
+  align-items: center;
+  padding: 0.65rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--panel-bg);
+  white-space: nowrap;
+  font-size: 0.95rem;
+}
+
+.save-indicator__dot {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.save-indicator--saving {
+  color: var(--accent);
+}
+
+.save-indicator--saved,
+.save-indicator--idle {
+  color: var(--success);
+}
+
+.save-indicator--error {
+  color: var(--danger);
+}
+
+.grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+}
+
+.panel {
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: var(--panel-bg);
+  display: grid;
+  gap: 0.9rem;
+}
+
+.panel h2 {
+  margin: 0;
+}
+
+.panel label,
+.metric-row label {
+  display: grid;
+  gap: 0.4rem;
+  font-weight: 500;
+  color: var(--text-h);
+}
+
+.panel p,
+.custom-metrics p {
+  color: var(--text);
+}
+
+input,
+textarea,
+button {
+  font: inherit;
+}
+
+input,
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--border);
+  border-radius: 0.8rem;
+  background: var(--field-bg);
+  color: var(--text-h);
+  padding: 0.7rem 0.85rem;
+}
+
+textarea {
+  min-height: 6rem;
+  resize: vertical;
+}
+
+button {
+  border: 1px solid transparent;
+  border-radius: 0.8rem;
+  padding: 0.7rem 1rem;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+}
+
+button:hover,
+button:focus-visible {
+  opacity: 0.92;
+}
+
+.custom-metrics {
+  gap: 1rem;
+}
+
+.custom-metrics__header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+}
+
+.custom-metrics__list {
+  display: grid;
+  gap: 1rem;
+}
+
+.metric-row {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  align-items: end;
+}
+
+@media (max-width: 720px) {
+  .app-header,
+  .custom-metrics__header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
