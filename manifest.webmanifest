@@ -1,0 +1,17 @@
+{
+  "name": "PrivateLifeTracker",
+  "short_name": "LifeTracker",
+  "description": "A privacy-first personal tracking app starter that can be installed on Android home screens.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "./assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
