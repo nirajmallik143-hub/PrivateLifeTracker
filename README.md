@@ -50,6 +50,10 @@ If GitHub Pages is not already enabled for the repository:
 2. Go to **Settings** → **Pages**
 3. Set the source to **GitHub Actions**
 
+To let the workflow enable Pages automatically, add a repository secret named
+`PAGES_TOKEN` containing a personal access token with repository access or
+Pages write permission. Without this secret, enable Pages manually first.
+
 ## Install on Android
 
 1. Open the live site in Chrome
