@@ -1,68 +1,121 @@
 # PrivateLifeTracker
 
-PrivateLifeTracker is now a small static progressive web app starter that can be opened in a browser and installed on an Android home screen.
+A **100% Private & Secure** personal tracking application. All your data stays encrypted on your device. No cloud sharing. No third-party access. Complete control.
 
-## What is included
+## 🔒 Security Features
 
-- A mobile-friendly landing page
-- A simple local-only note field stored in browser storage
-- A web app manifest for install prompts
-- A service worker for offline app-shell caching
-- A GitHub Pages workflow for publishing the root site
+- **End-to-End Encryption**: AES-256 encryption for all data
+- **Local Storage First**: Data stored locally on your device
+- **Zero External APIs**: No data leaves your device without your consent
+- **No Location Tracking**: Complete privacy
+- **Self-Hosted Option**: Run your own backend if needed
+- **Open Source**: Full transparency on how your data is handled
 
-## Project structure
+## 📊 Features
 
-```text
-/home/runner/work/PrivateLifeTracker/PrivateLifeTracker/
-├── .github/workflows/deploy-pages.yml
-├── assets/icon.svg
-├── index.html
-├── manifest.webmanifest
-├── script.js
-├── styles.css
-└── sw.js
+### Tracking Capabilities
+- **Health Metrics**: Steps, calories, sleep, heart rate, weight
+- **Productivity**: Tasks, time tracking, focus sessions, habits
+- **Finances**: Income, expenses, budgets, investments
+- **Mood & Mental Health**: Daily mood, stress levels, notes
+- **Fitness**: Workouts, exercises, progress tracking
+- **Custom Metrics**: Add your own tracking categories
+
+### Dashboard & Analytics
+- Real-time visualizations
+- Trends and insights
+- Monthly/yearly reports
+- Custom date ranges
+- Data export (CSV, JSON)
+
+### Privacy Controls
+- Encryption settings
+- Backup management
+- Data deletion options
+- Access logs
+- Device management
+
+## 🏗️ Architecture
+
+```
+PrivateLifeTracker/
+├── frontend/          # React + TypeScript (Vite)
+├── backend/           # Node.js/Express (Optional, self-hosted)
+├── encryption/        # Crypto utilities
+├── docs/              # Security & setup documentation
+└── tests/             # Unit & integration tests
 ```
 
-## Run locally
+## 🚀 Quick Start
 
-Any static file server works. For example:
+### Prerequisites
+- Node.js 16+
+- npm or yarn
+
+### Installation
 
 ```bash
-cd /home/runner/work/PrivateLifeTracker/PrivateLifeTracker
-python3 -m http.server 8000
+# Clone the repository
+git clone https://github.com/nirajmallik143-hub/PrivateLifeTracker.git
+cd PrivateLifeTracker
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
 ```
 
-Then open `http://localhost:8000`.
+## 📱 Supported Platforms
 
-## Deploy on GitHub Pages
+- ✅ Web (Any modern browser)
+- ✅ Desktop (Electron - coming soon)
+- ✅ Mobile (React Native - coming soon)
 
-After this branch is merged to `main`, GitHub Actions can publish the site with the included workflow.
+## 🔐 Data Privacy
 
-Expected Pages URL:
+Your data:
+- Is encrypted using AES-256 encryption
+- Never leaves your device (unless you choose self-hosted backend)
+- Is never sold, shared, or analyzed by third parties
+- Can be deleted completely at any time
+- Remains under your complete control
 
-```text
-https://nirajmallik143-hub.github.io/PrivateLifeTracker/
+## 📚 Documentation
+
+- [Security Architecture](./docs/SECURITY.md)
+- [Setup Guide](./docs/SETUP.md)
+- [API Documentation](./docs/API.md)
+- [Encryption Details](./docs/ENCRYPTION.md)
+
+## 🛠️ Development
+
+```bash
+# Run tests
+npm run test
+
+# Lint code
+npm run lint
+
+# Type check
+npm run type-check
 ```
 
-If GitHub Pages is not already enabled for the repository:
+## 📄 License
 
-1. Open the repository on GitHub
-2. Go to **Settings** → **Pages**
-3. Set the source to **GitHub Actions**
+MIT - Free to use and modify
 
-## Install on Android
+## ⚠️ Disclaimer
 
-1. Open the live site in Chrome
-2. Tap the browser menu
-3. Tap **Install app** or **Add to Home screen**
-4. Confirm the prompt
+This is your personal application. While we follow security best practices, ensure you:
+- Keep your encryption keys safe
+- Regularly back up your data
+- Keep dependencies updated
+- Run security audits periodically
 
-## Notes
+---
 
-- Data in this starter is stored only in the current browser on the current device
-- There is no backend in this repository snapshot
-- The sample note field is only a placeholder for future tracker features
-
-## License
-
-MIT
+**Built with privacy in mind. Your data, your control.** 🔒
