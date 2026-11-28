@@ -1,129 +1,90 @@
 # PrivateLifeTracker
 
-A **100% Private & Secure** personal tracking application. All your data stays encrypted on your device. No cloud sharing. No third-party access. Complete control.
+PrivateLifeTracker includes a React tracker with encrypted local autosave and a separate static progressive web app starter that can be installed on an Android home screen.
 
-## 🔒 Security Features
+## What is included
 
-- **End-to-End Encryption**: AES-256 encryption for all data
-- **Local Storage First**: Data is encrypted and autosaved locally on your device
-- **Zero External APIs**: No data leaves your device without your consent
-- **No Location Tracking**: Complete privacy
-- **Self-Hosted Option**: Run your own backend if needed
-- **Open Source**: Full transparency on how your data is handled
+- A React tracker with local encrypted autosave
+- A mobile-friendly landing page
+- A simple local-only note field stored in browser storage
+- A web app manifest for install prompts
+- A service worker for offline app-shell caching
+- A GitHub Pages workflow for publishing the root site
 
-## 📊 Features
+## Project structure
 
-### Tracking Capabilities
-- **Health Metrics**: Steps, calories, sleep, heart rate, weight
-- **Productivity**: Tasks, time tracking, focus sessions, habits
-- **Finances**: Income, expenses, budgets, investments
-- **Mood & Mental Health**: Daily mood, stress levels, notes
-- **Fitness**: Workouts, exercises, progress tracking
-- **Custom Metrics**: Add your own tracking categories
-
-### Dashboard & Analytics
-- Real-time visualizations
-- Trends and insights
-- Monthly/yearly reports
-- Custom date ranges
-- Data export (CSV, JSON)
-
-### Privacy Controls
-- Encryption settings
-- Backup management
-- Data deletion options
-- Access logs
-- Device management
-
-## 🏗️ Architecture
-
-```
+```text
 PrivateLifeTracker/
-├── frontend/          # React + TypeScript (Vite)
-├── backend/           # Node.js/Express (Optional, self-hosted)
-├── encryption/        # Crypto utilities
-├── docs/              # Security & setup documentation
-└── tests/             # Unit & integration tests
+├── .github/workflows/deploy-pages.yml
+├── assets/icon.svg
+├── docs/
+├── encryption/
+├── frontend/
+├── index.html
+├── manifest.webmanifest
+├── script.js
+├── styles.css
+└── sw.js
 ```
 
-## 🚀 Quick Start
+## Run the static starter locally
 
-### Prerequisites
-- Node.js 22.12+ (or 24.x / 26.x+)
-- npm or yarn
-
-### Installation
+Any static file server works. For example, from the repository root:
 
 ```bash
-# Clone the repository
-git clone https://github.com/nirajmallik143-hub/PrivateLifeTracker.git
-cd PrivateLifeTracker
+python3 -m http.server 8000
+```
 
-# Install dependencies
+Then open `http://localhost:8000`.
+
+## Run the React tracker locally
+
+Node.js 22.12+ (or 24.x / 26.x+) and npm are required.
+
+```bash
 npm install
-
-# Start development server
 npm run dev
-
-# Build for production
 npm run build
 ```
 
-## 📱 Supported Platforms
+Run `npm run test`, `npm run lint`, and `npm run type-check` during development.
 
-- ✅ Web (Any modern browser)
-- ✅ Desktop (Electron - coming soon)
-- ✅ Mobile (React Native - coming soon)
+### Autosave and privacy
 
-## 🔐 Data Privacy
+Tracker changes are saved after a 400ms debounce. The tracker encrypts its data with AES-256-GCM before writing it to IndexedDB and displays a save status. The device key is stored in the same browser profile, so this does not protect against a full compromise of that profile. Back up your device for disaster recovery beyond local autosave.
 
-Your data:
-- Is encrypted using AES-256 encryption
-- Never leaves your device (unless you choose self-hosted backend)
-- Is never sold, shared, or analyzed by third parties
-- Can be deleted completely at any time
-- Remains under your complete control
-- Is autosaved locally after every change with a short debounce
+See [Security Architecture](./docs/SECURITY.md) and [Encryption Details](./docs/ENCRYPTION.md).
 
-## 💾 Autosave
+## Deploy on GitHub Pages
 
-- Every tracked change is autosaved locally; no manual save button is required
-- Autosave waits 400ms after the latest change to avoid excessive writes while typing
-- Data is encrypted before it is written to IndexedDB
-- The app shows a subtle `Saving...` / `Saved locally` status indicator
+After this branch is merged to `main`, GitHub Actions can publish the site with the included workflow.
 
-## 📚 Documentation
+Expected Pages URL:
 
-- [Security Architecture](./docs/SECURITY.md)
-- [Setup Guide](./docs/SETUP.md)
-- [API Documentation](./docs/API.md)
-- [Encryption Details](./docs/ENCRYPTION.md)
-
-## 🛠️ Development
-
-```bash
-# Run tests
-npm run test
-
-# Lint code
-npm run lint
-
-# Type check
-npm run type-check
+```text
+https://nirajmallik143-hub.github.io/PrivateLifeTracker/
 ```
 
-## 📄 License
+If GitHub Pages is not already enabled for the repository:
 
-MIT - Free to use and modify
+1. Open the repository on GitHub
+2. Go to **Settings** → **Pages**
+3. Set the source to **GitHub Actions**
 
-## ⚠️ Disclaimer
+## Install on Android
 
-This is your personal application. While we follow security best practices, ensure you:
-- Keep your encryption keys safe
-- Back up your device or export your data for disaster recovery beyond local autosave
-- Keep dependencies updated
-- Run security audits periodically
+1. Open the live site in Chrome
+2. Tap the browser menu
+3. Tap **Install app** or **Add to Home screen**
+4. Confirm the prompt
 
----
+## Notes
 
-**Built with privacy in mind. Your data, your control.** 🔒
+- The static starter's note is stored unencrypted in the current browser on the current device; it is separate from the React tracker and its encrypted autosave.
+- The Pages workflow publishes the root static starter, not the React tracker.
+- There is no backend in this repository snapshot
+- The sample note field is only a placeholder for future tracker features
+
+## License
+
+MIT

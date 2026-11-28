@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="PrivateLifeTracker is a privacy-first personal tracking app that runs locally in your browser and can be installed on Android home screens."
+    />
+    <meta name="theme-color" content="#0f172a" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./assets/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./assets/icon.svg" />
+    <link rel="stylesheet" href="./styles.css" />
+    <title>PrivateLifeTracker</title>
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero">
+        <p class="eyebrow">PrivateLifeTracker</p>
+        <h1>Your life tracker, kept on your device.</h1>
+        <p class="lede">
+          Track health, mood, fitness, tasks, and spending in a privacy-first app
+          that stores data locally in your browser.
+        </p>
+        <div class="actions">
+          <button id="installButton" class="primary" type="button" hidden>
+            Install app
+          </button>
+          <a class="secondary" href="#install">How to add to home screen</a>
+        </div>
+      </section>
+
+      <section class="card-grid" aria-label="Highlights">
+        <article class="card">
+          <h2>Private by default</h2>
+          <p>No accounts, no ads, and no third-party tracking.</p>
+        </article>
+        <article class="card">
+          <h2>Works offline</h2>
+          <p>Once opened, the app shell stays available even without internet.</p>
+        </article>
+        <article class="card">
+          <h2>Home-screen ready</h2>
+          <p>Install it on Android like an app from the browser menu.</p>
+        </article>
+      </section>
+
+      <section class="card tracker-preview" aria-labelledby="preview-title">
+        <div>
+          <h2 id="preview-title">Quick local note</h2>
+          <p>
+            This starter build includes a simple browser-only note so you can confirm
+            local storage is working on your phone.
+          </p>
+        </div>
+        <label class="note-field" for="localNote">Your note</label>
+        <textarea
+          id="localNote"
+          name="localNote"
+          rows="6"
+          placeholder="Example: Walked 5,000 steps and felt productive today."
+        ></textarea>
+        <p id="saveStatus" class="status" aria-live="polite"></p>
+      </section>
+
+      <section id="install" class="card install-steps" aria-labelledby="install-title">
+        <h2 id="install-title">Install on Redmi 12 / Android</h2>
+        <ol>
+          <li>Open this site in Chrome.</li>
+          <li>Tap the browser menu (⋮).</li>
+          <li>Select <strong>Install app</strong> or <strong>Add to Home screen</strong>.</li>
+          <li>Confirm the install prompt.</li>
+        </ol>
+      </section>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
